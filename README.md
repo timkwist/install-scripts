@@ -80,6 +80,7 @@ plugins=(
   cp
   zsh-syntax-highlighting
   zsh-autosuggestions
+  timer
 )
 ```
 
