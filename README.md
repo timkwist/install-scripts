@@ -1,100 +1,154 @@
-# install-scripts
+# Terminal Setup Script
 
-What to install:
+This repository contains a script that sets up an enhanced terminal environment with powerful CLI tools and productivity enhancements.
 
-* Rectangle (https://rectangleapp.com/)
-* Sublime Text (https://www.sublimetext.com/)
-* iTerm (https://www.iterm2.com/)
-* Slack (https://slack.com/)
-* Homebrew (https://brew.sh/)
+## Usage
 
+Simply run the setup script:
 
-From: https://gist.github.com/ganapativs/e571d9287cb74121d41bfe75a0c864d7
-
-- Install iTerm2 from https://www.iterm2.com/
-- Install oh-my-zsh from https://ohmyz.sh/ or https://github.com/robbyrussell/oh-my-zsh
-- Set iTerm2 theme tab theme to Dark - `Preferences | Appearance | Tabs | Theme > Dark`
-- Install Fira Code fonts from https://github.com/tonsky/FiraCode (Clone and navigate to `dstr > ttf`, install all font files by double clicking)
-- Install Powerline fonts from https://github.com/powerline/fonts
-- Set fonts for iTerm2 - `Preferences | Profiles | Text`
-     - Change `Font` to `14pt Fira code regular` and Check `Use Ligatures` checkbox
-     - Change `Non ASCII Font` to `14pt Fira mono` and Check `Use Ligatures` checkbox
-- Install iTerm2 snazzy theme from https://github.com/sindresorhus/iterm2-snazzy
-     - Navigate to `Preferences | Profiles | Color Presets > Snazzy`
-- Install Pure prompt for iTerm2 from https://github.com/sindresorhus/pure#oh-my-zsh
-```sh
-# .zshrc
-ZSH_THEME=""
-
-npm install --global pure-prompt
-
-# oh-my-zsh overrides the prompt, so Pure must be activated after `source $ZSH/oh-my-zsh.sh`
-# .zshrc
-autoload -U promptinit; promptinit
-prompt pure
-```
-- Install awesome `z` tool for autojumping between recent folders(Check usage here - https://github.com/rupa/z/)
-     - Use brew `brew install z` (This should take care of everything for you)
-     - Or to setup manually, Download 'z' from https://github.com/rupa/z/blob/master/z.sh and move to `~/` and add following snippet to `~/.zshrc`
-```sh
-# .zshrc
-# include Z, yo
-. ~/z.sh
-```
-- Install `zsh-syntax-highlighting` oh-my-zsh plugin
-```sh
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-```
-- Install `zsh-autosuggestions` oh-my-zsh plugin
-```sh
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-```
-- Install `pygments` package, a pre-requisite for `colorize` plugin(`cat` with syntax highlight support, alias `ccat`)
-```sh
-pip install pygments
-
-# OR
-pip3.6 install pygments
-```
-- Install `trash` command as safter alternative for `rm` command
-```sh
-npm install --global trash-cli
-
-trash ./folder/file.txt # Should move to trash instead of permanently deleting it
-```
-- Finally update plugins list for oh-my-zsh in `~/.zshrc`
-```sh
-# .zshrc
-plugins=(
-  git
-  brew
-  common-aliases
-  node
-  npm
-  rand-quote
-  sudo
-  yarn
-  z
-  colored-man-pages
-  colorize
-  cp
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  timer
-)
+```bash
+./setup.sh
 ```
 
-**Screenshot**
+After running, restart your terminal or run:
 
-<img width="1536" alt="Screenshot 2021-03-01 at 5 36 16 PM" src="https://user-images.githubusercontent.com/4010960/109494977-a2dc9880-7ab4-11eb-884c-960890c381eb.png">
+```bash
+source ~/.zshrc
+```
 
-**Bonus**
+## What It Does
 
-Try https://starship.rs/ or https://github.com/denysdovhan/spaceship-prompt
+The setup script:
 
-Useful links:
-- https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview
-- https://commandlinepoweruser.com/
-- https://medium.freecodecamp.org/jazz-up-your-zsh-terminal-in-seven-steps-a-visual-guide-e81a8fd59a38
-- https://hackernoon.com/oh-my-zsh-made-for-cli-lovers-bea538d42ec1
-- https://www.smashingmagazine.com/2015/07/become-command-line-power-user-oh-my-zsh-z/
+1. Checks for zsh and oh-my-zsh installation
+2. Creates a backup of your existing .zshrc
+3. Installs Homebrew if not already installed
+4. Allows selective installation of tool categories:
+   - Core utilities (fzf, eza, bat, ripgrep, fd)
+   - Navigation tools (tldr, direnv)
+   - Development tools (httpie, tmux)
+   - Git tools (lazygit, git-delta)
+   - System monitoring (bottom, glances)
+   - ZSH plugins (autosuggestions, syntax-highlighting)
+   - Applications (rectangle)
+5. Checks for Node.js/npm before installing npm packages
+6. Configures FZF keybindings and completion
+7. Installs global NPM tools (trash-cli)
+8. Updates your `.zshrc` with necessary configurations
+9. Adds useful ZSH plugins (git, brew, node, npm, fzf, history, macos, docker, pip, python, vscode, extract)
+10. Sets a timestamp in your prompt
+11. Safely adds aliases without overwriting existing ones
+
+## New Features After Setup
+
+Once the setup script has been run, you'll have access to these powerful features:
+
+### Enhanced File Navigation and Management
+
+- **fzf**: Fuzzy finder for files, command history, and more (CTRL+R, CTRL+T)
+- **eza**: Modern replacement for `ls` with color-coding and git integration
+- **bat**: Enhanced `cat` with syntax highlighting and git integration
+- **fd**: Fast and user-friendly alternative to `find`
+- **ripgrep**: Extremely fast text search tool (`rg`)
+- **trash-cli**: Send files to trash instead of permanently deleting them
+
+### Improved Terminal Experience
+
+- **zsh-autosuggestions**: Fish-like command suggestions as you type
+- **zsh-syntax-highlighting**: Syntax highlighting for shell commands
+- **direnv**: Environment variables loader for different directories
+- **rectangle**: Window management app for macOS
+- **timestamp prompt**: Shows date and time in your command prompt
+
+### Development Tools
+
+- **httpie**: Modern, user-friendly HTTP client for the command line
+- **lazygit**: Simple terminal UI for git commands
+- **git-delta**: Enhanced syntax highlighting for git diffs
+- **tmux**: Terminal multiplexer for managing multiple terminal sessions
+- **bottom**: A graphical process/system monitor similar to htop
+- **glances**: System monitoring tool with a web interface option
+
+### ZSH Plugins
+
+- **git**: Git integration and aliases
+- **brew**: Homebrew commands and completion
+- **node/npm**: Node.js and npm shortcuts
+- **history**: Enhanced history management
+- **macos**: macOS-specific commands and shortcuts
+- **docker**: Docker commands and completion
+- **pip/python**: Python development helpers
+- **vscode**: Visual Studio Code integration
+- **extract**: Extracts archived files with a single command
+
+## Examples
+
+```bash
+# Fuzzy find files (press CTRL+T while typing a command)
+vim <CTRL+T>
+
+# Search command history (press CTRL+R)
+<CTRL+R>
+
+# Use enhanced ls replacement (aliases added automatically)
+ls      # simple listing (eza)
+ll      # detailed list (eza -l)
+la      # show all files (eza -la)
+lsd     # list with directories first
+lt      # list sorted by size
+ltr     # list sorted by modification time
+lt1     # tree view, depth 1
+lt2     # tree view, depth 2
+lt3     # tree view, depth 3
+lg      # list with git status
+
+# View a file with syntax highlighting
+bat filename.js
+
+# Find files quickly
+fd "pattern"
+
+# Fast text search
+rg "search pattern"
+
+# Move files to trash instead of deleting
+trash file.txt
+
+# Fix a previous command typo
+apt-get install python3
+
+# Interactive git UI
+lazygit
+
+# Enhanced git diff view
+git diff | delta
+
+# Terminal multiplexer (split panes, multiple sessions)
+tmux
+
+# Interactive system monitor
+bottom
+
+# Web-based system monitoring
+glances -w
+
+# Enhanced HTTP client
+http GET google.com
+
+# Load environment variables from .envrc automatically
+cd project-with-envrc # direnv loads variables
+
+# TLDR pages - simplified man pages with examples
+tldr tar
+```
+
+## Features
+
+- 📋 **Selective Installation**: Choose which package groups to install
+- 🔄 **Idempotent**: Can be run multiple times safely
+- 🛡️ **Safe**: Backs up your .zshrc before making changes
+- 🔍 **Smart Alias Management**: Doesn't override existing aliases
+- ⚠️ **Error Handling**: Detailed error messages and recovery options
+- 📝 **Detailed Summary**: Lists all changes made after completion
+
+Enjoy your enhanced terminal experience!
