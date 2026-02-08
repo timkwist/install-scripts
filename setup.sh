@@ -125,6 +125,22 @@ else
   echo "trash-cli is already installed."
 fi
 
+# -- Configure iTerm2 Option+Arrow word jumping --
+# This can't be reliably scripted (iTerm2 overwrites plist changes while running).
+# Manual steps are required. See: https://superuser.com/a/1157575
+echo ""
+echo "⌨️  iTerm2: Enable Option+Arrow word jumping (Natural Text Editing)"
+echo "  1. Open iTerm2 → Settings (⌘,)"
+echo "  2. Go to Profiles → Keys → Keyboard Behavior"
+echo "  3. Click Presets... → Natural Text Editing"
+echo ""
+echo "  More info: https://superuser.com/a/1157575"
+echo ""
+read -p "  Press Y when done, or S to skip: " ITERM_CONFIGURED
+if [[ "$ITERM_CONFIGURED" =~ ^[Ss]$ ]]; then
+  echo "  Skipped. You can configure this later in iTerm2 settings."
+fi
+
 # -- Add to .zshrc safely --
 echo "📝 Updating $ZSHRC..."
 
@@ -158,7 +174,7 @@ fi
 
 # -- Add plugins to the plugin list --
 update_plugins() {
-  local REQUIRED_PLUGINS=(git brew node npm fzf history macos docker pip python vscode extract zsh-autosuggestions zsh-syntax-highlighting)
+  local REQUIRED_PLUGINS=(git brew node npm fzf history macos docker pip python vscode extract)
   if grep -q '^plugins=' "$ZSHRC"; then
     echo "🔁 Merging plugins list..."
     local CURRENT_PLUGINS=$(grep '^plugins=' "$ZSHRC" | sed -E 's/plugins=\((.*)\)/\1/' | tr -d '\n')
@@ -231,7 +247,8 @@ echo "📝 Summary of changes:"
 [ -n "$PACKAGES" ] && echo "  - Installed: $PACKAGES"
 [ -f "$BACKUP_FILE" ] && echo "  - Created backup of .zshrc: $BACKUP_FILE"
 echo "  - Updated .zshrc with new configurations"
-if [[ "$INSTALL_CORE" =~ ^[Yy] ]]; then 
+echo "  - Prompted for iTerm2 Natural Text Editing setup"
+if [[ "$INSTALL_CORE" =~ ^[Yy] ]]; then
   echo "  - Added file navigation tools (run 'tldr fzf' for examples)"
 fi
 echo ""
